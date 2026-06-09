@@ -1,0 +1,23 @@
+name: Jules-Hermes
+description: MCP server for repository analysis, task tracking, and system info.
+mcp_server:
+  command: python3
+  args: ["server.py"]
+tools:
+  - name: analyze_repository
+    description: Analyzes the repository structure and returns file counts by extension.
+    parameters:
+      path:
+        type: string
+        description: Path to analyze (default is ".")
+  - name: get_system_info
+    description: Returns basic system information.
+  - name: manage_tasks
+    description: Manages a simple task list.
+    parameters:
+      action:
+        type: string
+        description: "Action to perform: 'add', 'list', or 'clear'"
+      task:
+        type: string
+        description: "Task description (required for 'add')"
