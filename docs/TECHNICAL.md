@@ -1,26 +1,32 @@
 # Technical Documentation: Jules-Hermes MCP Server
 
-## Architecture
-The server is built using the `fastmcp` library, which implements the Model Context Protocol (MCP).
+## Interaction Infrastructure
 
-## Tools Detail
+### Resources
+- **`objective://current`**: Current session goal.
+- **`events://recent`**: Last 50 session events (JSON).
+- **`thought-log://current`**: Raw text log of reasoning steps.
 
-### `analyze_repository(path=".")`
-- **Description**: Scans the specified directory (recursively, ignoring `.git`) and returns a JSON object with file counts mapped to their extensions.
-- **Output**: JSON string.
+### Tools
 
-### `get_system_info()`
-- **Description**: Collects platform, Python version, current working directory, and CPU count.
-- **Output**: JSON string.
+#### `set_objective(objective)`
+Sets the session's north star.
 
-### `manage_tasks(action, task=None)`
-- **Description**: Manages `tasks.json` file.
-- **Actions**:
-  - `add`: Appends a new task to the list.
-  - `list`: Returns all tasks in JSON format.
-  - `clear`: Deletes the `tasks.json` file.
-- **Output**: Confirmation message or JSON string.
+#### `emit_event(event_type, description)`
+Logs a milestone or operational event. Types: `milestone`, `error`, `correction`, `info`.
 
-## Dependencies
-- `fastmcp`: Python library for building MCP servers.
-- `json`, `os`, `platform`, `sys`: Standard Python libraries.
+#### `manage_tasks(action, ...)`
+- **Actions**: `add`, `list`, `update`, `clear`.
+- **Fields**: `task`, `task_id`, `status`, `assigned_to`.
+
+#### `record_thought(thought)`
+Appends reasoning to the persistent log.
+
+#### `get_task_details(task_id)`
+Full metadata for a specific task.
+
+#### `analyze_repository(path)`
+File extension statistics.
+
+#### `get_system_info()`
+Host environment metadata.
