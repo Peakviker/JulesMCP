@@ -1,0 +1,69 @@
+name: Jules-Hermes
+description: MCP server for repository analysis, advanced task tracking with assignments, and interaction loop monitoring.
+mcp_server:
+  command: python3
+  args: ["server.py"]
+resources:
+  - name: thought_log
+    uri: "thought-log://current"
+    description: Current log of reasoning steps and observations.
+  - name: session_objective
+    uri: "objective://current"
+    description: Current high-level goal of the session.
+  - name: recent_events
+    uri: "events://recent"
+    description: Structured stream of recent session events and milestones.
+tools:
+  - name: analyze_repository
+    description: Analyzes the repository structure and returns file counts by extension.
+    parameters:
+      path:
+        type: string
+        description: Path to analyze (default is ".")
+  - name: record_thought
+    description: Records an internal reasoning step or observation.
+    parameters:
+      thought:
+        type: string
+        description: The reasoning step or observation to record.
+  - name: set_objective
+    description: Sets the current high-level objective for the session.
+    parameters:
+      objective:
+        type: string
+        description: The high-level goal to define.
+  - name: emit_event
+    description: Emits a structured event to the session event stream.
+    parameters:
+      event_type:
+        type: string
+        description: Category of the event (e.g., 'milestone', 'error', 'correction').
+      description:
+        type: string
+        description: Detailed description of what happened.
+  - name: get_system_info
+    description: Returns basic system information.
+  - name: manage_tasks
+    description: Manages a task list with assignments and status tracking.
+    parameters:
+      action:
+        type: string
+        description: "Action to perform: 'add', 'list', 'update', or 'clear'"
+      task:
+        type: string
+        description: "Task description (required for 'add')"
+      task_id:
+        type: integer
+        description: "ID of the task to update (required for 'update')"
+      status:
+        type: string
+        description: "New status for the task (required for 'update')"
+      assigned_to:
+        type: string
+        description: "Entity assigned to the task (e.g., 'Jules', 'Hermes')"
+  - name: get_task_details
+    description: Retrieves full information about a specific task by its ID.
+    parameters:
+      task_id:
+        type: integer
+        description: ID of the task to retrieve.
